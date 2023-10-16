@@ -1,8 +1,34 @@
+import { useState } from "react";
+import newRequest from "../../utils/newRequest";
+import { useNavigate } from "react-router-dom";
+
 const LoginForm = () => {
+
+  const router = useNavigate()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await newRequest.post("auth/login", 
+      {email, password})
+
+      localStorage.setItem("currentUser", JSON.stringify(response.data))
+
+      router("/")
+    } catch (error) {
+      setError(error.response.data)
+    }
+  }
+
   return (
     <div>
       <div className="w-full max-w-sm p-4 border border-slate- rounded-lg shadow py-8 px-12">
-        <form className="space-y-6" action="#">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <h5 className="text-xl font-bold text-white text-center">
           サインイン
           </h5>
@@ -14,6 +40,7 @@ const LoginForm = () => {
               メール
             </label>
             <input
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
@@ -28,6 +55,7 @@ const LoginForm = () => {
               パスワード
             </label>
             <input
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -40,6 +68,7 @@ const LoginForm = () => {
           >
             ログイン
           </button>
+          {error && error}
           <div className="text-sm font-medium text-gray-300">
             登録されていない？{" "}
             {/* 未登録 */}
