@@ -25,7 +25,7 @@ const SecondaryFooter = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <a href="https://github.com/fvdime/japanese-blog-website" className="hover:underline">
                   ソースコード
                 </a>
               </li>

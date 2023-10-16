@@ -19,7 +19,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <a href="https://github.com/fvdime/japanese-blog-website" target="_blank" rel='noreferrer' className="hover:underline">
                   ソースコード
                 </a>
               </li>
